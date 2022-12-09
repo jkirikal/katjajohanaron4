@@ -57,6 +57,7 @@ app.get('/auth/authenticate', async(req, res) => {
         console.error(err.message);
         res.status(400).send(err.message);
     }
+    
 });
 
 // signup a user
