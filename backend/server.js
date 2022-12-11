@@ -146,7 +146,6 @@ app.post('/posts/addpost', async(req, res) => {
     const {title, body} = req.body
     console.log(title, body)
     const newpost = await pool.query("INSERT INTO posttable(title, body) values ($1, $2) RETURNING*", [title, body])
-    console.log(newpost)
     if (newpost) {
         res.json({"succesful": "true",
         "post": newpost})
@@ -154,10 +153,40 @@ app.post('/posts/addpost', async(req, res) => {
 
 })
 
-app.get('/posts/:id', async(req, res) => {
+app.get('/posts/select/:id', async(req, res) => {
     console.log("individual post request")
     const {id} = req.params
     const post = await pool.query("SELECT * FROM posttable WHERE id = $1", [id])
     res.json(post.rows[0])
 })
 
+app.get('/posts/select/:id/delete', async(req, res) => {
+    console.log("individual post deletion")
+    const {id} = req.params
+    const post = await pool.query("DELETE FROM posttable WHERE id = $1 RETURNING*", [id])
+    if (post) {res.json({"msg": "succesful"})} else {
+        res.json({"msg": "error"})
+    }
+})
+
+app.post('/posts/select/:id/update', async(req, res) => {
+    console.log("individual post update")
+    const {id} = req.params
+    const new_body = req.body.body
+    console.log(new_body)
+    const post = await pool.query("UPDATE posttable SET body = $1 WHERE id = $2 RETURNING*", [new_body, id])
+    if (post) {
+        res.json({"msg": "post updated"})
+    } else {res.json({"msg": "error"})}
+})
+
+
+
+app.get('/posts/deleteall', async(req, res) => {
+    console.log("deleting all posts!")
+    const delete_posts = await pool.query("DELETE FROM posttable RETURNING*")
+    if (delete_posts) {
+        res.json({"msg": "everything deleted"})
+    } else {res.json({"msg": "error occured"})}
+
+})

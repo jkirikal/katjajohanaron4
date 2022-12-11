@@ -33,5 +33,9 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/posts/9
+GET http://localhost:3000/posts/select/9
+
+###
+GET http://localhost:3000/posts/deleteall
+
 
