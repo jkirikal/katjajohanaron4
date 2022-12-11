@@ -65,7 +65,7 @@ LogIn() {
 .form {
   max-width: 420px;
   margin: 30px auto;
-  background: rgb(119, 196, 135);
+  background: rgb(167, 154, 154);
   text-align: left;
   padding: 40px;
   border-radius: 10px;
