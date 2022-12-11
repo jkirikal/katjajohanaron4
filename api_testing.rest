@@ -33,9 +33,20 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:3000/posts/select/9
+GET http://localhost:3000/posts/select/35
 
 ###
 GET http://localhost:3000/posts/deleteall
+
+###
+GET http://localhost:3000/posts/select/36/delete
+
+###
+POST http://localhost:3000/posts/select/37/update
+Content-Type: application/json
+
+{
+    "body": "new text"
+}
 
 
