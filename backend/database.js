@@ -2,8 +2,8 @@ const Pool = require('pg').Pool;
 
 const pool = new Pool({
     user: "postgres",
-    password: "QWERTY", //add your password
-    database: "hw4db",
+    password: "database", //add your password
+    database: "testWAD",
     host: "localhost",
     port: "5432"
 });
@@ -48,6 +48,8 @@ execute(createTblQuery).then(result => {
 execute(createUsersTbl).then(result => {
     if (result) {
         console.log('Table "users" is created');
+    } else {
+        console.log("Table 'users' is not created")
     }
 });
 
