@@ -73,10 +73,10 @@ LogIn() {
 }
 h3 {
   text-align: center;
-  color:  rgb(8, 110, 110);
+  color:  whitesmoke;
 }
 label {
-  color: rgb(8, 110, 110);
+  color:  whitesmoke;
   display: inline-block;
   margin: 25px 0 15px;
   font-size: 0.8em;
