@@ -126,3 +126,67 @@ app.get('/auth/logout', (req, res) => {
     console.log('delete jwt request arrived');
     res.status(202).clearCookie('jwt').json({ "Msg": "cookie cleared" }).send
 });
+
+app.get('/posts/getallposts', async(req, res) => {
+    console.log('getposts request')
+    const posts = await pool.query("SELECT * FROM posttable")
+    const posts_for_res = []
+    for (let i = 0; i < posts.rows.length; i++) {
+        posts_for_res.push({
+            "title": posts.rows[i].title,
+            "body": posts.rows[i].body,
+            "id": posts.rows[i].id
+        })
+    }
+    res.json(posts_for_res)
+})
+
+app.post('/posts/addpost', async(req, res) => {
+    console.log("addpost request")
+    const {body} = req.body
+    console.log(body)
+    const newpost = await pool.query("INSERT INTO posttable(body) values ($1) RETURNING*", [body])
+    if (newpost) {
+        res.json({"succesful": "true",
+        "post": newpost})
+    } else {res.json({"succesful": "false"})}
+
+})
+
+app.get('/posts/select/:id', async(req, res) => {
+    console.log("individual post request")
+    const {id} = req.params
+    const post = await pool.query("SELECT * FROM posttable WHERE id = $1", [id])
+    res.json(post.rows[0])
+})
+
+app.delete('/posts/select/:id/delete', async(req, res) => {
+    console.log("individual post deletion")
+    const {id} = req.params
+    const post = await pool.query("DELETE FROM posttable WHERE id = $1 RETURNING*", [id])
+    if (post) {res.json({"msg": "succesful"})} else {
+        res.json({"msg": "error"})
+    }
+})
+
+app.put('/posts/select/:id/update', async(req, res) => {
+    console.log("individual post update")
+    const {id} = req.params
+    const new_body = req.body.body
+    console.log(new_body)
+    const post = await pool.query("UPDATE posttable SET body = $1 WHERE id = $2 RETURNING*", [new_body, id])
+    if (post) {
+        res.json({"msg": "post updated"})
+    } else {res.json({"msg": "error"})}
+})
+
+
+
+app.delete('/posts/deleteall', async(req, res) => {
+    console.log("deleting all posts!")
+    const delete_posts = await pool.query("DELETE FROM posttable RETURNING*")
+    if (delete_posts) {
+        res.json({"msg": "everything deleted"})
+    } else {res.json({"msg": "error occured"})}
+
+})

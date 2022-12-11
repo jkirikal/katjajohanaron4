@@ -16,3 +16,26 @@ Content-Type: application/json
     "password": "test"
 
 }
+
+###
+GET http://localhost:3000/posts/getallposts
+
+###
+
+POST http://localhost:3000/posts/addpost
+Content-Type: application/json
+
+{
+    "title": "title2",
+    "body": "body1"
+
+}
+
+###
+
+GET http://localhost:3000/posts/select/9
+
+###
+GET http://localhost:3000/posts/deleteall
+
+
