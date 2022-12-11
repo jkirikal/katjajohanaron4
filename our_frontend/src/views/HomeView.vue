@@ -65,14 +65,14 @@ export default {
           });
         
     },
-   
-  mounted() {
+  
+    },
+    mounted() {
         fetch('http://localhost:3000/posts/getallposts')
         .then((response) => response.json())
         .then(data => this.posts = data)
         .catch(err => console.log(err.message))
     }
-    },
 };
 </script>
 
