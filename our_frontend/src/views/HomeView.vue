@@ -3,7 +3,7 @@
     <div class="sidebar"></div>
     <div>
       <div class="logout">
-        <!-- <button v-if = "authResult" @click="Logout" class="button">Logout</button> -->
+        <button v-if = "authResult" @click="Logout" class="button">Logout</button>
       </div>
       <div class="post-list" v-for="post in posts"  :key="post.id">  
         <a class="post" :href="'/#/post/'+post.id">
@@ -21,7 +21,7 @@
 
 <script>
 // @ is an alias to /src
-// import auth from "../auth";
+import auth from "../auth";
 
 export default {
   name: "HomeView",
@@ -30,7 +30,7 @@ export default {
    data: function() {
     return {
     posts:[ ],
-    // authResult: auth.authenticated()
+    authResult: auth.authenticated()
     }
   },
   methods: {
@@ -52,19 +52,22 @@ export default {
       });
     },
     DeleteAll(){
-      fetch(`http://localhost:3000/api/posts/`, {
+      console.log('yes')
+      fetch(`http://localhost:3000/posts/deleteall`, {
           method: "DELETE",
         })
           .then((response) => {
             console.log(response.data);
+            window.location.reload()
           })
           .catch((e) => {
             console.log(e);
           });
+        
     },
   }, 
   mounted() {
-        fetch('https://jsonplaceholder.typicode.com/posts')
+        fetch('http://localhost:3000/posts/getallposts')
         .then((response) => response.json())
         .then(data => this.posts = data)
         .catch(err => console.log(err.message))

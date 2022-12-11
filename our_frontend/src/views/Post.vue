@@ -27,14 +27,14 @@
     methods: {
       fetchAPost(id) {
         // fetch one post with the specied id (id)
-        fetch(`https://jsonplaceholder.typicode.com/posts/${id}`)
+        fetch(`http://localhost:3000/posts/select/${id}`)
           .then((response) => response.json())
           .then((data) => (this.post = data))
           .catch((err) => console.log(err.message));
       },
       updatePost() {
         // using Fetch - put method - updates a specific post based on the passed id and the specified body
-        fetch(`http://localhost:3000/api/posts/${this.post.id}`, {
+        fetch(`http://localhost:3000/posts/select/${this.post.id}/update`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -53,7 +53,7 @@
       },
       deletePost() {
         // using Fetch - delete method - delets a specific post based on the passed id
-        fetch(`http://localhost:3000/api/posts/${this.post.id}`, {
+        fetch(`http://localhost:3000/posts/select/${this.post.id}/delete`, {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
         })

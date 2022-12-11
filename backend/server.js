@@ -143,9 +143,9 @@ app.get('/posts/getallposts', async(req, res) => {
 
 app.post('/posts/addpost', async(req, res) => {
     console.log("addpost request")
-    const {title, body} = req.body
-    console.log(title, body)
-    const newpost = await pool.query("INSERT INTO posttable(title, body) values ($1, $2) RETURNING*", [title, body])
+    const {body} = req.body
+    console.log(body)
+    const newpost = await pool.query("INSERT INTO posttable(body) values ($1) RETURNING*", [body])
     if (newpost) {
         res.json({"succesful": "true",
         "post": newpost})
@@ -160,7 +160,7 @@ app.get('/posts/select/:id', async(req, res) => {
     res.json(post.rows[0])
 })
 
-app.get('/posts/select/:id/delete', async(req, res) => {
+app.delete('/posts/select/:id/delete', async(req, res) => {
     console.log("individual post deletion")
     const {id} = req.params
     const post = await pool.query("DELETE FROM posttable WHERE id = $1 RETURNING*", [id])
@@ -169,7 +169,7 @@ app.get('/posts/select/:id/delete', async(req, res) => {
     }
 })
 
-app.post('/posts/select/:id/update', async(req, res) => {
+app.put('/posts/select/:id/update', async(req, res) => {
     console.log("individual post update")
     const {id} = req.params
     const new_body = req.body.body
@@ -182,7 +182,7 @@ app.post('/posts/select/:id/update', async(req, res) => {
 
 
 
-app.get('/posts/deleteall', async(req, res) => {
+app.delete('/posts/deleteall', async(req, res) => {
     console.log("deleting all posts!")
     const delete_posts = await pool.query("DELETE FROM posttable RETURNING*")
     if (delete_posts) {
