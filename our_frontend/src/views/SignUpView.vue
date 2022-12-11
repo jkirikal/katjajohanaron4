@@ -55,7 +55,7 @@ SignUp() {
 .form {
   max-width: 420px;
   margin: 30px auto;
-  background: rgb(167, 154, 154);
+  background: rgb(73, 79, 76);
   text-align: left;
   padding: 40px;
   border-radius: 10px;
@@ -83,7 +83,7 @@ input {
   color: blue;
 }
 button {
-  background: rgb(8, 110, 110);
+  background: rgb(130, 184, 162);
   border: 0;
   padding: 10px 20px;
   margin-top: 20px;
@@ -93,6 +93,6 @@ button {
   text-align: center;
 }
 button:hover {
-background-color: rgb(66, 4, 125);
+background-color: rgb(114, 125, 120);
 }
 </style>
