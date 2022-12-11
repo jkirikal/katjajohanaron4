@@ -21,7 +21,7 @@
 
 <script>
 // @ is an alias to /src
-import auth from "../auth";
+// import auth from "../auth";
 
 export default {
   name: "HomeView",
