@@ -1,14 +1,21 @@
 <template>
-  <div class="header">
-    <div class="container">
-    <button v-if = "authResult" @click="Logout" class="center">Logout</button>
-    </div>
-    <div class="post-list" v-for="post in posts"   :key="post.index">  
-      <div class="post">
-          <h3>  Title:  {{post.title}} </h3>
-          <p>  <b> Body: </b> {{post.body}} </p>
+  <div class="body">
+    <div class="sidebar"></div>
+    <div>
+      <div class="logout">
+        <!-- <button v-if = "authResult" @click="Logout" class="button">Logout</button> -->
+      </div>
+      <div class="post-list" v-for="post in posts"  :key="post.id">  
+        <a class="post" :href="'/#/post/'+post.id">
+          <span> {{ post.body }} </span>
+        </a>
+      </div>
+      <div class="footerbtns">
+        <a :href="'/#/addpost/'" id="addpost" class="button">Add post</a>
+        <button @click="DeleteAll" class="button">Delete all</button>
       </div>
     </div>
+    <div class="sidebar"></div>
   </div>
 </template>
 
@@ -23,7 +30,7 @@ export default {
    data: function() {
     return {
     posts:[ ],
-    authResult: auth.authenticated()
+    // authResult: auth.authenticated()
     }
   },
   methods: {
@@ -44,6 +51,17 @@ export default {
         console.log("error logout");
       });
     },
+    DeleteAll(){
+      fetch(`http://localhost:3000/api/posts/`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+    },
   }, 
   mounted() {
         fetch('https://jsonplaceholder.typicode.com/posts')
@@ -55,85 +73,65 @@ export default {
 </script>
 
 <style scoped>
-body{
-  margin: 20px 40px;
-  font-size: 1.2rem;
-  letter-spacing: 1px;
-  background: #fafafa;
-  position: relative;
+a{
+  text-decoration: none;
 }
+.body{
+        display:flex;
+        justify-content:space-between;
+    }
+
 .post-list{
-  background: rgb(189, 212, 199);
-  margin-bottom: 5px;
-  padding: 3px 5px;
-  border-radius: 10px;
+  display:flex;
+  flex-direction:column;
+  border: 5px solid rgb(97, 183, 155);
+  border-radius:20px;
+  background-color: rgb(73, 79, 76);
+  color:white;
+  margin:10px;
+  margin-right:50px;
+  margin-left:50px;
 }
-h3{
-    margin: 0;
-  padding: 0;
-  font-family: 'Quicksand', sans-serif;
-  color: #444;
-  background: #7e9756;
-}
-p{
-  background: #796dbd;
-}
-h1, h2, h3, h4, ul, li, a, input, label, button, div, footer{
-  margin: 0;
-  padding: 0;
-  font-family: 'Quicksand', sans-serif;
-  color: #444;
-}
-nav{
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 80px;
-}
-input{
-  padding: 10px 12px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  font-size: 1em;
-  width: 100%;
-}
-label{
-  display: block;
-  margin: 20px 0 10px;
-}
-button{
-  margin-top: 30px;
-  border-radius: 36px;
-  background: #FEE996;
-  border:0;
-  font-weight: 700;
-  font-size: 0.8em;
-  display: block;
-  padding: 10px 16px;
-  letter-spacing: 2px;
-}
-nav{
-  display: flex;
-  align-items: center;
+.post span{
+  color:white;
 }
 .post {
     width: 80%;
     position: relative;
     padding: 10px;
     margin: 10px auto;
-    border: 1px solid gray;
     text-align: left;
 }
-.center {
-  margin: auto;
-  border: 0;
-  padding: 10px 20px;
-  margin-top: 20px;
-  margin: 10px auto;
-  width: 30%; 
+.button{
+  color:white;
+  border-radius: 36px;
+  border:0;
+  font-weight: 700;
+  font-size: 0.8em;
+  display: block;
+  padding: 10px 16px;
+  letter-spacing: 2px;
+  border:5px solid rgb(130, 184, 162);
+  background-color: rgb(73, 79, 76);
 }
-.container {
+.button:hover{
+  background-color: rgb(114, 125, 120);
+}
+.logout {
   display: flex;
   justify-content: center;
 }
+.footerbtns {
+  display:flex;
+  justify-content:space-around;
+}
+.sidebar{
+        border:5px solid rgb(130, 184, 162);
+        background-color: rgb(73, 79, 76);
+        width:20%;
+        border-radius: 20px;
+        margin:5px;
+    }
+
 </style>
+
