@@ -126,3 +126,38 @@ app.get('/auth/logout', (req, res) => {
     console.log('delete jwt request arrived');
     res.status(202).clearCookie('jwt').json({ "Msg": "cookie cleared" }).send
 });
+
+app.get('/posts/getallposts', async(req, res) => {
+    console.log('getposts request')
+    const posts = await pool.query("SELECT * FROM posttable")
+    const posts_for_res = []
+    for (let i = 0; i < posts.rows.length; i++) {
+        posts_for_res.push({
+            "title": posts.rows[i].title,
+            "body": posts.rows[i].body,
+            "id": posts.rows[i].id
+        })
+    }
+    res.json(posts_for_res)
+})
+
+app.post('/posts/addpost', async(req, res) => {
+    console.log("addpost request")
+    const {title, body} = req.body
+    console.log(title, body)
+    const newpost = await pool.query("INSERT INTO posttable(title, body) values ($1, $2) RETURNING*", [title, body])
+    console.log(newpost)
+    if (newpost) {
+        res.json({"succesful": "true",
+        "post": newpost})
+    } else {res.json({"succesful": "false"})}
+
+})
+
+app.get('/posts/:id', async(req, res) => {
+    console.log("individual post request")
+    const {id} = req.params
+    const post = await pool.query("SELECT * FROM posttable WHERE id = $1", [id])
+    res.json(post.rows[0])
+})
+
