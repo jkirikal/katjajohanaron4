@@ -22,7 +22,8 @@ data: function() {
    password: '',
   }
   },
-  methods: {
+ methods: {
+    
 
 
 LogIn() {
@@ -57,8 +58,8 @@ LogIn() {
         .then(data => this.posts = data)
         .catch(err => console.log(err.message))
     }
-  }
-
+  
+}
 </script>
 
 <style scoped>
@@ -81,6 +82,7 @@ label {
   font-size: 0.8em;
   text-transform: uppercase;
   letter-spacing: 1px;
+   font-weight: bold;
 }
 input {
   display: block;
