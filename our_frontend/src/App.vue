@@ -20,11 +20,17 @@
 
 nav {
   padding: 30px;
+  background-color: rgb(73, 79, 76);
+  border: 5px solid rgb(97, 183, 155);
+  border-radius:20px;
+  color:white;
 }
-
+a {
+  text-decoration: none;
+}
 nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: white;
 }
 
 nav a.router-link-exact-active {

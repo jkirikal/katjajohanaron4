@@ -1,14 +1,17 @@
 <template>
   <div class="body">
     <div class="sidebar"></div>
-    <div>
+    <div class="middle">
       <div class="logout">
         <button v-if = "authResult" @click="Logout" class="button">Logout</button>
       </div>
-      <div class="post-list" v-for="post in posts"  :key="post.id">  
+      <div class="middlepart">
+        <div class="post-list" v-for="post in posts"  :key="post.id">  
         <a class="post" :href="'/#/post/'+post.id">
+          <span id="date"> 12. December 2022 </span>
           <span> {{ post.body }} </span>
         </a>
+      </div>
       </div>
       <div class="footerbtns">
         <a :href="'/#/addpost/'" id="addpost" class="button">Add post</a>
@@ -94,18 +97,28 @@ a{
   background-color: rgb(73, 79, 76);
   color:white;
   margin:10px;
-  margin-right:50px;
-  margin-left:50px;
+}
+.middlepart{
+  width:100%;
+}
+.middle{
+  width:80%
 }
 .post span{
   color:white;
 }
 .post {
-    width: 80%;
-    position: relative;
+    display:flex;
+    flex-direction:column;
     padding: 10px;
     margin: 10px auto;
     text-align: left;
+    width:100%;
+}
+#date{
+  display:flex;
+  justify-content:flex-end;
+  margin-right: 30px;
 }
 .button{
   color:white;
