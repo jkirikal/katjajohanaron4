@@ -48,6 +48,8 @@ execute(createTblQuery).then(result => {
 execute(createUsersTbl).then(result => {
     if (result) {
         console.log('Table "users" is created');
+    } else {
+        console.log("Table 'users' is not created")
     }
 });
 
